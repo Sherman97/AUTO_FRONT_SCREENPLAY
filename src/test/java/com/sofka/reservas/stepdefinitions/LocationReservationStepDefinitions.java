@@ -18,9 +18,9 @@ import com.sofka.reservas.utils.ReservationDataFactory;
 import com.sofka.reservas.utils.TestEnvironment;
 import com.sofka.reservas.ui.ReservationTargets;
 import io.cucumber.java.Before;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+import io.cucumber.java.es.Cuando;
+import io.cucumber.java.es.Dado;
+import io.cucumber.java.es.Entonces;
 import net.serenitybdd.annotations.Managed;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
@@ -56,7 +56,7 @@ public class LocationReservationStepDefinitions {
         apiBootstrapClient = new ApiBootstrapClient();
     }
 
-    @Given("que el usuario colaborador se encuentra autenticado en la plataforma")
+    @Dado("que el usuario colaborador se encuentra autenticado en la plataforma")
     public void queElUsuarioColaboradorSeEncuentraAutenticadoEnLaPlataforma() {
         AuthenticatedSession session = apiBootstrapClient.createAuthenticatedSession(authenticatedUser);
         availableReservationCriteria = apiBootstrapClient.resolveNextAvailableCriteria(
@@ -77,7 +77,7 @@ public class LocationReservationStepDefinitions {
         );
     }
 
-    @When("realiza la reserva de una locacion para su reunion, indicando la fecha y la franja horaria requeridas")
+    @Cuando("realiza la reserva de una locacion para su reunion, indicando la fecha y la franja horaria requeridas")
     public void realizaLaReservaDeUnaLocacionParaSuReunionIndicandoLaFechaYLaFranjaHorariaRequeridas() {
         collaborator.attemptsTo(
                 SearchLocation.named(TestEnvironment.TARGET_LOCATION_NAME),
@@ -89,7 +89,7 @@ public class LocationReservationStepDefinitions {
         );
     }
 
-    @Then("el sistema registra exitosamente la reserva")
+    @Entonces("el sistema registra exitosamente la reserva")
     public void elSistemaRegistraExitosamenteLaReserva() {
         collaborator.attemptsTo(
                 WaitUntil.the(ReservationTargets.SUCCESS_MESSAGE, isVisible()).forNoMoreThan(20).seconds(),
@@ -98,7 +98,7 @@ public class LocationReservationStepDefinitions {
         collaborator.should(seeThat(ReservationWasCreated.successfully(), equalTo(true)));
     }
 
-    @When("realiza la reserva de una locacion para su reunion, indicando una hora inicial posterior a la hora final")
+    @Cuando("realiza la reserva de una locacion para su reunion, indicando una hora inicial posterior a la hora final")
     public void realizaLaReservaDeUnaLocacionParaSuReunionIndicandoUnaHoraInicialPosteriorALaHoraFinal() {
         collaborator.attemptsTo(
                 SearchLocation.named(TestEnvironment.TARGET_LOCATION_NAME),
@@ -110,7 +110,7 @@ public class LocationReservationStepDefinitions {
         );
     }
 
-    @Then("el sistema no permite la reserva")
+    @Entonces("el sistema no permite la reserva")
     public void elSistemaNoPermiteLaReserva() {
         collaborator.attemptsTo(
                 WaitUntil.the(ReservationTargets.CONFIRM_RESERVATION, isVisible()).forNoMoreThan(10).seconds(),
@@ -119,7 +119,7 @@ public class LocationReservationStepDefinitions {
         collaborator.should(seeThat(ReservationWasCreated.successfully(), equalTo(false)));
     }
 
-    @Then("el sistema informa que la hora de fin debe ser posterior a la hora de inicio")
+    @Entonces("el sistema informa que la hora de fin debe ser posterior a la hora de inicio")
     public void elSistemaInformaQueLaHoraDeFinDebeSerPosteriorALaHoraDeInicio() {
         collaborator.attemptsTo(
                 WaitUntil.the(ReservationTargets.CONFIRM_RESERVATION, isVisible()).forNoMoreThan(10).seconds(),

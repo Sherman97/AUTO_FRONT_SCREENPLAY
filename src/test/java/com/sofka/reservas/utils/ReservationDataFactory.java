@@ -10,14 +10,14 @@ public final class ReservationDataFactory {
     }
 
     public static ReservationCriteria availableSlot() {
-        return new ReservationCriteria(LocalDate.now(), "08:00 AM", "09:00 AM");
+        return new ReservationCriteria(LocalDate.now().plusDays(1), "08:00 AM", "09:00 AM");
     }
 
     public static ReservationCriteria unavailableSlot() {
-        return new ReservationCriteria(LocalDate.now(), "11:00 AM", "12:00 PM");
+        return new ReservationCriteria(LocalDate.now().plusDays(1), "11:00 AM", "12:00 PM");
     }
 
     public static ReservationCriteria invalidTimeRange() {
-        return new ReservationCriteria(LocalDate.now(), "09:00 AM", "08:00 AM");
+        return new ReservationCriteria(LocalDate.now().plusDays(1), "09:00 AM", "08:00 AM");
     }
 }

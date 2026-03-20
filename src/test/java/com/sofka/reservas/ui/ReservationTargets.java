@@ -50,4 +50,9 @@ public final class ReservationTargets {
         return Target.the("dia disponible " + dayOfMonth)
             .located(By.xpath("//div[contains(@class,'calendar-day') and contains(@class,'available') and normalize-space()='" + dayOfMonth + "']"));
     }
+
+    public static Target selectedDay(String dayOfMonth) {
+        return Target.the("dia seleccionado " + dayOfMonth)
+            .located(By.xpath("//div[contains(@class,'calendar-day') and contains(@class,'selected') and normalize-space()='" + dayOfMonth + "']"));
+    }
 }

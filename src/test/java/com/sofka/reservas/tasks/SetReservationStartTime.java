@@ -5,8 +5,6 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.Tasks;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
-import net.serenitybdd.screenplay.actions.Clear;
-import net.serenitybdd.screenplay.actions.Enter;
 
 public class SetReservationStartTime implements Task {
 
@@ -23,18 +21,19 @@ public class SetReservationStartTime implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         String normalizedTime = normalizeForTimeInput(startTime);
-        actor.attemptsTo(
-                Clear.field(ReservationTargets.START_TIME),
-                Enter.theValue(startTime).into(ReservationTargets.START_TIME)
-        );
+        String uiFormattedTime = normalizeForTextTimeInput(startTime);
         BrowseTheWeb.as(actor).evaluateJavascript(
                 "const el = document.getElementById('startTime');" +
-                        "if (el && el.type === 'time') {" +
-                        "  el.value = arguments[0];" +
+                        "if (el) {" +
+                        "  const value = el.type === 'time' ? arguments[0] : arguments[1];" +
+                        "  const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;" +
+                        "  setter.call(el, value);" +
                         "  el.dispatchEvent(new Event('input', { bubbles: true }));" +
                         "  el.dispatchEvent(new Event('change', { bubbles: true }));" +
+                        "  el.dispatchEvent(new Event('blur', { bubbles: true }));" +
                         "}",
-                normalizedTime
+                normalizedTime,
+                uiFormattedTime
         );
     }
 
@@ -58,6 +57,19 @@ public class SetReservationStartTime implements Task {
             hour += 12;
         }
         return String.format("%02d:%s", hour, minutes);
+    }
+
+    private String normalizeForTextTimeInput(String timeValue) {
+        if (timeValue == null) {
+            return "";
+        }
+        String value = timeValue.trim().toUpperCase();
+        if (!value.endsWith("AM") && !value.endsWith("PM")) {
+            return timeValue;
+        }
+        String meridian = value.endsWith("AM") ? "a. m." : "p. m.";
+        String time = value.substring(0, value.length() - 2).trim();
+        return time + " " + meridian;
     }
 }
 
