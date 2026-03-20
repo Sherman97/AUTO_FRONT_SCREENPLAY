@@ -3,7 +3,7 @@ package com.sofka.reservas.utils;
 public final class TestEnvironment {
 
     public static final String UI_BASE_URL = "http://localhost:8080";
-    public static final String API_BASE_URL = "http://localhost:3000";
+    public static final String API_BASE_URL = "http://localhost:8080";
     public static final String LOGIN_URL = UI_BASE_URL + "/";
     public static final String DASHBOARD_URL = UI_BASE_URL + "/dashboard";
     public static final String AUTH_REGISTER_ENDPOINT = API_BASE_URL + "/auth/register";
