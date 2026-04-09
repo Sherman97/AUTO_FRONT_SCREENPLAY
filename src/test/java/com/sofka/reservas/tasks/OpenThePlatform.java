@@ -14,7 +14,7 @@ public class OpenThePlatform implements Task {
 
     @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(Open.url(TestEnvironment.LOGIN_URL));
+        actor.attemptsTo(Open.url(TestEnvironment.loginUrl()));
     }
 }
 

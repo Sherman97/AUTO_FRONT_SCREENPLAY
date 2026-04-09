@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
-    features = "src/test/resources/features/creacion_reserva_locacion.feature",
+    features = "src/test/resources/features/hu02_crear_reserva_admin.feature",
     glue = "com.sofka.reservas.stepdefinitions",
     snippets = CucumberOptions.SnippetType.CAMELCASE
 )

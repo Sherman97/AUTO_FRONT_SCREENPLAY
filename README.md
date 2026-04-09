@@ -1,54 +1,59 @@
 # AUTO_FRONT_SCREENPLAY
 
-Proyecto de automatizacion Front-End en Java con Serenity BDD, Gradle, Cucumber y Screenplay.
+Automatizacion E2E Front-End con Java, Serenity BDD, Cucumber y Screenplay.
 
-## Codigo fuente funcional
+## HU cubierta
 
-Este repositorio incluye el codigo fuente funcional de las pruebas automatizadas E2E para reserva de locaciones.
+- `HU-02`: Crear reserva manual desde modulo administrador.
 
-- Implementacion principal en `src/test/java/com/sofka/reservas/`
-- Features Gherkin en `src/test/resources/features/`
-- Runner principal: `LocationReservationRunner`
-- Configuracion de Serenity: `serenity.conf`
+Feature principal:
+- `src/test/resources/features/hu02_crear_reserva_admin.feature`
 
-## Cobertura actual
+Runner:
+- `com.sofka.reservas.runners.LocationReservationRunner`
 
-- Reserva exitosa de una locacion para una reunion de trabajo.
-- Validacion negativa: no registrar reserva cuando la hora inicial es posterior a la hora final.
+## Escenarios automatizados (HU-02)
+
+- Creacion manual de reserva exitosa.
+- Intento de creacion con conflicto de horario (solapamiento).
+- Intento de creacion con datos incompletos (boton deshabilitado).
+
+## Configuracion base
+
+- URL por defecto: `http://localhost:5173`
+- Login: `/login`
+- Vista admin: `/admin-reservations`
+- Credenciales admin por defecto:
+  - `prueba.admin@demo.com`
+  - `admin123`
+
+Parametros sobrescribibles:
+
+```powershell
+.\gradlew.bat clean test -Dwebdriver.base.url=http://localhost:5173 -Dadmin.email=prueba.admin@demo.com -Dadmin.password=admin123
+```
 
 ## Prerrequisitos
 
-- Java 17 o superior.
-- Google Chrome instalado.
-- Aplicacion objetivo disponible en `http://localhost:8080`.
+- Java 17+
+- Chrome instalado
+- Frontend y backend levantados
 
-## Instrucciones de ejecucion de tests
+## Ejecucion
 
-1. Abrir una terminal en la raiz del proyecto.
-2. Ejecutar todas las pruebas:
-
-```bash
-./gradlew clean test
-```
-
-En Windows PowerShell:
+Suite completa:
 
 ```powershell
-.\gradlew.bat clean test
+.\gradlew.bat clean test aggregate --rerun-tasks
 ```
 
-3. (Opcional) Ejecutar solo el runner de reservas:
-
-```bash
-./gradlew test --tests com.sofka.reservas.runners.LocationReservationRunner
-```
-
-En Windows PowerShell:
+Solo HU-02 (runner):
 
 ```powershell
-.\gradlew.bat test --tests com.sofka.reservas.runners.LocationReservationRunner
+.\gradlew.bat test --tests com.sofka.reservas.runners.LocationReservationRunner --rerun-tasks
 ```
 
 ## Reportes
 
-- Reporte Serenity generado en `target/site/serenity/index.html`.
+- Gradle: `build/reports/tests/test/index.html`
+- Serenity: `target/site/serenity/index.html`

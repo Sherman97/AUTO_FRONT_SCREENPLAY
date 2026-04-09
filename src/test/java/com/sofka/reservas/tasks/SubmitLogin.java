@@ -20,7 +20,7 @@ public class SubmitLogin implements Task {
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
             Click.on(LoginTargets.SUBMIT),
-            WaitUntil.the(ReservationTargets.SEARCH_INPUT, isVisible()).forNoMoreThan(20).seconds()
+            WaitUntil.the(ReservationTargets.ADMIN_PAGE_TITLE, isVisible()).forNoMoreThan(20).seconds()
         );
     }
 }
