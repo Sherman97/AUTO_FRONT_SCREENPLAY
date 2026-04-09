@@ -1,18 +1,19 @@
 package com.sofka.reservas.ui;
 
 import net.serenitybdd.screenplay.targets.Target;
-import org.openqa.selenium.By;
+import com.sofka.reservas.ui.catalog.LoginFindByCatalog;
+import com.sofka.reservas.ui.support.FindByLocator;
 
 public final class LoginTargets {
 
     public static final Target EMAIL = Target.the("correo corporativo")
-        .located(By.id("email"));
+        .locatedBy(FindByLocator.of(LoginFindByCatalog.class, "EMAIL"));
 
     public static final Target PASSWORD = Target.the("clave")
-        .located(By.id("password"));
+        .locatedBy(FindByLocator.of(LoginFindByCatalog.class, "PASSWORD"));
 
     public static final Target SUBMIT = Target.the("boton iniciar sesion")
-        .located(By.cssSelector("button[type='submit']"));
+        .locatedBy(FindByLocator.of(LoginFindByCatalog.class, "SUBMIT"));
 
     private LoginTargets() {
     }

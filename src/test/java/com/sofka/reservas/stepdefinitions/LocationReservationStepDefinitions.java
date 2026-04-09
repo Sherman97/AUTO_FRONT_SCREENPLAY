@@ -28,9 +28,7 @@ import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
 import net.serenitybdd.screenplay.waits.WaitUntil;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -224,7 +222,7 @@ public class LocationReservationStepDefinitions {
         if (rows.isEmpty()) {
             return false;
         }
-        List<WebElement> columns = rows.get(0).findElements(By.tagName("td"));
+        List<WebElementFacade> columns = ReservationTargets.ADMIN_FIRST_ROW_CELLS.resolveAllFor(actor);
         if (columns.size() < 7) {
             return false;
         }
